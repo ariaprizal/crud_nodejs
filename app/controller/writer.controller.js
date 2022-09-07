@@ -1,0 +1,233 @@
+const { writer } = require("./../models");
+const db = require("./../models");
+const Writer = db.writer;
+const Op = db.Sequelize.Op;
+
+exports.createWriter = async (req, res) =>
+{
+    // Validate request
+    if (!req.body.name) {
+        res.status(400).send({
+          message: "Content can not be empty! "
+        });
+        return;
+    }
+    // Create a Tutorial
+    const writer = {
+        name: req.body.name,
+        address: req.body.address,
+        age: req.body.age,
+        category: req.body.category
+    };
+
+    // Save Tutorial in the database
+    try {
+        const saveWriter = await Writer.create(writer);
+        res.json({
+            "status": 200,
+            "message": "Success Create Writer",
+            "data": saveWriter
+        });
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.errors[0].message,
+            "data": null
+        });
+    }
+}
+
+exports.findAllWriter = async (req, res) => {
+    try
+    {
+        const resultWriter = await Writer.findAll();
+        if (resultWriter.length !== 0)
+        {
+            res.json({
+                "status": 200,
+                "message": "Success Get All Writer",
+                "data": resultWriter
+            });   
+        }
+        else
+        {
+            res.json({
+                "status": 404,
+                "message": "Failed Get All Writer Because Writer Is empty",
+                "data": resultWriter
+            });  
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+}
+
+exports.findById = async (req, res) => {
+    try
+    {
+        const id = req.params.id
+        const resultWriter = await Writer.findByPk(id);
+        if (resultWriter !== null)
+        {
+            res.json({
+                "status": 200,
+                "message": `Success Get Writer For This Id ${id}`,
+                "data": resultWriter
+            });   
+        }
+        else
+        {
+            res.json({
+                "status": 404,
+                "message": `Failed Get Writer Because This ID ${id} Not Found`,
+                "data": resultWriter
+            });  
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+}
+
+exports.updateWriter = async (req, res) => {
+    try
+    {
+        const id = req.params.id;
+        const resultUpdate = await Writer.update(req.body, {
+            where: {id : id}
+        })
+        if (resultUpdate[0] !== 0)
+        {
+            res.json({
+                "status": 200,
+                "message": `Successfully Update Writer For This Id ${id}`,
+                "data": req.body
+            });  
+        }
+        else
+        {
+            res.json({
+                "status": 400,
+                "message": `Failed Update Writer For This Id ${id}`,
+                "data": req.body
+            }); 
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+}
+
+exports.deleteWriter = async (req, res) => {
+    try
+    {
+        const id = req.params.id;
+        const resultDelete = await Writer.destroy({
+            where: {id : id}
+        })
+        if (resultDelete[0] !== 0)
+        {
+            res.json({
+                "status": 200,
+                "message": `Successfully Delete Writer For This Id ${id}`,
+                "data": req.body
+            });  
+        }
+        else
+        {
+            res.json({
+                "status": 400,
+                "message": `Failed Delete Writer For This Id ${id}`,
+                "data": req.body
+            }); 
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+}
+
+exports.deleteAllWriter = async (req, res) => {
+    try
+    {
+        const resultDelete = await Writer.destroy({
+            where: {},
+            truncate: false
+        })
+        if (resultDelete[0] !== 0)
+        {
+            res.json({
+                "status": 200,
+                "message": `Successfully Delete All Writer Data`,
+                "data": req.body
+            });  
+        }
+        else
+        {
+            res.json({
+                "status": 400,
+                "message": `Failed Delete All Writer Data`,
+                "data": req.body
+            }); 
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+}
+
+exports.findWriterByCategory = async (req, res) => {
+    try
+    {
+        const category = req.params.category;
+        const resultWriter = await Writer.findAll({
+            where: { category: category }
+        });
+        if (resultWriter.length !== 0)
+        {
+            res.json({
+                "status": 200,
+                "message": `Successfully Find Writer By category ${category}`,
+                "data": resultWriter
+            });
+        }
+        else
+        {
+            res.json({
+                "status": 404,
+                "message": `Failed Find Writer By categories ${category}`,
+                "data": null
+            }); 
+        }
+    }
+    catch (error)
+    {
+        res.json({
+            "message": error.message,
+            "data": null
+        });
+    }
+
+}
