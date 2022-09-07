@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
   //   console.log("Drop and re-sync db.");
   // });
 
+  // Import Routes 
   require("./app/routes/writer.routes")(app);
 
 // set port, listen for requests

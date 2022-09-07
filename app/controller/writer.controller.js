@@ -3,6 +3,12 @@ const db = require("./../models");
 const Writer = db.writer;
 const Op = db.Sequelize.Op;
 
+/**
+ * Create Writer Function
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 exports.createWriter = async (req, res) =>
 {
     // Validate request
@@ -38,6 +44,11 @@ exports.createWriter = async (req, res) =>
     }
 }
 
+/**
+ * Function Find All Writer
+ * @param req 
+ * @param res 
+ */
 exports.findAllWriter = async (req, res) => {
     try
     {
@@ -68,6 +79,11 @@ exports.findAllWriter = async (req, res) => {
     }
 }
 
+/**
+ * Function Find Writer By Id
+ * @param req 
+ * @param res 
+ */
 exports.findById = async (req, res) => {
     try
     {
@@ -99,6 +115,11 @@ exports.findById = async (req, res) => {
     }
 }
 
+/**
+ * Function Update Writer By Id
+ * @param req 
+ * @param res 
+ */
 exports.updateWriter = async (req, res) => {
     try
     {
@@ -132,6 +153,11 @@ exports.updateWriter = async (req, res) => {
     }
 }
 
+/**
+ * Function Delete Writer By Id
+ * @param req 
+ * @param res 
+ */
 exports.deleteWriter = async (req, res) => {
     try
     {
@@ -165,6 +191,11 @@ exports.deleteWriter = async (req, res) => {
     }
 }
 
+/**
+ * Function Delete All Writer
+ * @param req 
+ * @param res 
+ */
 exports.deleteAllWriter = async (req, res) => {
     try
     {
@@ -198,6 +229,11 @@ exports.deleteAllWriter = async (req, res) => {
     }
 }
 
+/**
+ * Function Find All Writer By Category
+ * @param req 
+ * @param res 
+ */
 exports.findWriterByCategory = async (req, res) => {
     try
     {
